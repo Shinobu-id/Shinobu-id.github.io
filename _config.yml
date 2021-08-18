@@ -1,7 +1,7 @@
 # Site settings
-title: Xcode Website
+title: HUDAXCODE
 description: Official Website
 keywords: Modern, Blogging, Fun
 author: Hudaxcode
-baseurl: "" # the subpath of your site, e.g. /blog/
+baseurl: "https://hudaxcodez" # the subpath of your site, e.g. /blog/
 url: "" # the base hostname & protocol for your site
