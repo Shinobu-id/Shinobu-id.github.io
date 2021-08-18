@@ -1,13 +1,16 @@
 ---
-title:  "Planes are cool!"
-subtitle: "The Fly!"
+title:  "Kumpulan Apk mini"
+subtitle: "mini vip"
 author: "HudaxCode"
 avatar: "img/authors/wferr.png"
 image: "img/a.jpg"
 date:   2021-08-18 12:12:12
 ---
 
-### Dolor sit amet?
-Test
-### Aliquam suscipit.
-Hello wolrd
+### Apa itu apk mini?
+Ini khusus kang tuyul yg kaga ngerti sekip aja yak,
+
+
+### Aplikasi mini
+Okeh kali ini gw mau kasi semua apk mini yg ada .
+<p> Tokopedia </p>
