@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hello, WHOAMI ?!</title>
+    <meta name="description" content="Nothing Like 127.0.0.1">
+    <meta property="og:image" content="https://a.top4top.io/p_2057ircfm0.jpg">
+</head>
+<style type="text/css">
+  @import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono');
+
+:root {
+  --white: #e5e5e3;
+  --black: #212121;
+}
+
+body {
+  font-size: 16px;
+  background-size: cover;
+  font-family: 'Ubuntu mono';
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+g-terminal {
+  width: 600px;
+  height: 400px;
+  box-shadow: 2px 4px 10px rgba(0, 0 , 0, .5);
+  /* Resizeable (use bottom right corner) */
+  resize: both;
+  overflow: hidden;
+  min-width: 400px;
+  min-height: 100px;
+}
+
+g-toolbar {
+  background: linear-gradient(#262626 0%, #2b2b2b 100%);
+  border: 1px solid #070707;
+  width: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+  height: 45px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0.5px 0 rgba(256, 256, 256, .15);
+}
+
+g-toolbar > *:not(:last-child) {
+  margin-right: 5px;
+}
+
+g-title {
+  color: var(--white);
+  font-weight: bold;
+  text-align: center;
+  width: calc(100% - 400px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 28%;
+  margin-right: auto;
+}
+
+g-search {
+  margin-left: auto;
+}
+
+g-minimize {
+  margin-left: 10px;
+}
+
+g-promt {
+  background: #2d2d2d;
+  height: calc(100% - 25px);
+  padding: 4px 2px;
+  display: flex;
+}
+
+g-user {
+  color: #4a9009;
+  font-weight: bold;
+}
+
+g-location::before {
+  content: ':';
+  color: var(--white);
+  font-weight: normal;
+}
+
+g-location {
+  color: #33629e;
+  font-weight: bold;
+}
+
+g-location::after {
+  content: '# menu';
+  color: var(--white);
+  font-weight: normal;
+}
+
+g-cursor {
+  height: 17px;
+  width: 8px;
+  background: var(--white);
+  margin-left: 8px;
+  animation: 800ms ease infinite alternate blink;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Buttons */
+g-toolbar > *:not(g-title) {
+  width: 16px;
+  height: 16px;
+  padding: 8px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+g-add, g-search, g-menu {
+  border: 1px solid var(--black);
+  background-color: #333;
+  border-bottom: 1px solid black;
+  border-radius: 5px;
+}
+
+g-toolbar > *:nth-child(-n+4):not(g-title):hover {
+  filter: brightness(110%);
+  transition: filter 0.5s ease;
+}
+
+g-toolbar > *:nth-last-child(-n+3):hover {
+  border: 1px solid var(--black);
+  border-radius: 50%;
+  background-color: #333;
+  padding: 7px;
+  transition: background-color 0.5s ease;
+}
+
+/* Adwaita SVG icons */
+g-add {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16.009" height="16"><g fill="%23e5e5e3"><path d="M4.003 1s-.709-.014-1.447.355C1.817 1.725 1.003 2.667 1.003 4v9h-1l-.004 2h.004l3 .01V15h13v-2h-1V4s.014-.709-.355-1.447C14.278 1.814 13.336 1 12.003 1zm0 2h8c.667 0 .725.186.855.447.131.262.145.553.145.553v9h-10V4c0-.667.186-.725.447-.855.262-.131.553-.145.553-.145z"/><path d="M7.009 5v2h-2v2h2v2h2V9h2V7h-2V5z"/></g></svg>');
+}
+
+g-search {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><g fill="%23e5e5e3"><path d="M6.508 1C3.48 1 1.002 3.473 1.002 6.5c0 3.026 2.478 5.5 5.506 5.5s5.504-2.474 5.504-5.5c0-3.027-2.476-5.5-5.504-5.5zm0 2a3.486 3.486 0 013.504 3.5c0 1.944-1.556 3.5-3.504 3.5a3.488 3.488 0 01-3.506-3.5C3.002 4.555 4.56 3 6.508 3z"/><path d="M10 8.99a1 1 0 00-.695 1.717l4.004 4a1 1 0 101.414-1.414l-4.004-4A1 1 0 0010 8.99z"/></g></svg>');
+}
+
+g-menu {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M3 3h10v2H3zm0 4h10v2H3zm0 4h10v2H3z" fill="%23e5e5e3"/></svg>');
+}
+
+g-minimize {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M4 10.009h8v1.989H4z" fill="%23e5e5e3"/></svg>');
+}
+
+g-maximize {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M3.988 3.992v8.012H12V3.992zm2 2H10v4.012H5.988z" fill="%23e5e5e3"/></svg>');
+}
+
+g-close {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M4 4h1.031c.255.011.51.129.688.313L8 6.592l2.312-2.28c.266-.231.447-.306.688-.313h1v1c0 .286-.034.55-.25.75L9.469 8.031l2.25 2.25c.188.188.281.454.281.719v1h-1c-.265 0-.53-.093-.719-.281L8 9.438l-2.281 2.28A1.015 1.015 0 015 12H4v-1c0-.265.093-.53.281-.719l2.281-2.25-2.28-2.281A.909.909 0 014 5z" fill="%23e5e5e3"/></svg>');
+}
+  .bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1431352832634-845fad190fbd?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=ec80c41e488dc2b99ed543df2f3f0919');
+    background-position: center center;
+    background-origin: content-box;
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: -2;
+  }
+
+  .lightning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1431352832634-845fad190fbd?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=ec80c41e488dc2b99ed543df2f3f0919');
+    background-position: center center;
+    background-origin: content-box;
+    background-size: cover;
+    background-attachment: fixed;
+    -webkit-filter: brightness(3);
+    filter: brightness(3);
+    -o-filter: brightness(3);
+    -moz-filter: brightness(3);
+    z-index: -1;
+  }
+
+  .flashit {
+    -webkit-animation: flash ease-out 7s infinite;
+    -moz-animation: flash ease-out 7s infinite;
+    animation: flash ease-out 7s infinite;
+    animation-delay: 2s;
+  }
+
+  @-webkit-keyframes flash {
+    from {
+      opacity: 0;
+    }
+
+    92% {
+      opacity: 0;
+    }
+
+    93% {
+      opacity: 0.6;
+    }
+
+    94% {
+      opacity: 0.2;
+    }
+
+    96% {
+      opacity: 0.9;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes flash {
+    from {
+      opacity: 0;
+    }
+
+    92% {
+      opacity: 0;
+    }
+
+    93% {
+      opacity: 0.6;
+    }
+
+    94% {
+      opacity: 0.2;
+    }
+
+    96% {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  #logo {
+    z-index: 1000;
+    width: 100%;
+    font-size: 6rem;
+    color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -18rem;
+    margin-top: -2rem;
+    font-weight: 900;
+    text-align: center;
+  }
+
+  #logo span {
+    font-weight: 100;
+  }
+
+  @import url(https://fonts.googleapis.com/css?family=Titillium+Web:200,900|Lato:100,300,900);
+
+  @media screen and (max-width: 630px) {
+    #logo {
+      font-size: 3rem;
+      margin-left: -9rem;
+      margin-top: -1rem;
+    }
+  }
+  h2 {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  color: white;
+  font-family: "Titillium Web", "lato", sans-serif;
+  }
+</style>
+<body>
+  <div class="bg"></div>
+  <div class="lightning flashit"></div>
+  <g-terminal>
+  <g-toolbar>
+    <g-add></g-add>
+    <g-title><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7a0815150e3a120f1e1b">[email&#160;protected]</a>:~/</g-title>
+    <g-search></g-search>
+    <g-menu></g-menu>
+    <g-minimize></g-minimize>
+    <g-maximize></g-maximize>
+    <g-close></g-close>
+  </g-toolbar>
+  <g-promt>
+    <g-user><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="96e4f9f9e2d6fee3f2f7">[email&#160;protected]</a></g-user>
+    <g-location>~</g-location>
+    <g-cursor></g-cursor>
+  </g-promt>
+</g-terminal>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
