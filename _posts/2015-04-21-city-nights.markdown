@@ -3,7 +3,7 @@ title:  "Auto Create Instagram Account."
 subtitle: "Unlimited Account IG"
 author: "HudaxCode"
 avatar: "img/authors/wferr.png"
-image: "img/Screenshot_2021-09-15-09-24-47-84.jpg"
+image: "img/IMG_20210915_172131.jpg"
 date:   2021-09-15 12:12:12
 ---
 
