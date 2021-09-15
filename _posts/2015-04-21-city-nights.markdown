@@ -1,7 +1,7 @@
 ---
 title:  "Auto Create Instagram Account."
 subtitle: "Unlimited Account IG"
-author: "Hudaxcode"
+author: "HudaxCode"
 avatar: "img/authors/wferr.png"
 image: "img/Screenshot_2021-09-15-09-24-47-84.jpg"
 date:   2021-09-15 12:12:12
@@ -23,7 +23,22 @@ Jadi enak-enak lah.
 
  • 100k PERBULAN 
  • 300k PERMANEN
+
 ### Install nya ?
+```
+pkg update -y
+pkg upgrade -y
+pkg install git python
+pkg install requests -y
+pkg install bs4 -y
+pkg install user_agent
+pkg install unzip -y
+git clone https://github.com/hudaxcodez/ig
+cd Ig
+unzip ig.zup
+cd ig
+python ig.py
+```
 
 ### Jadi gimana?
 Buat yg mau beli gausah banyak nanya lah males gua ladenin nya, apalagi yg ngeluh gk dapet2 wahaha itu bukan salah script tpi emng pengguna ny aja kurang ibadah wkwk.
