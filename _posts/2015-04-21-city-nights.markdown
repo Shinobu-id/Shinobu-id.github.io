@@ -15,12 +15,13 @@ Kelebihan nih SC bisa di run di PC maupun hp
 Jadi enak-enak lah.
 
 ### FITUR
+```
 -CREATE UNLIMITED ACCOUNT
 -DUMP PROXY AND CHECKING
 -AUTO FOLLOW USER BY LIST
 -AUTO CHANGE PROFIL PICUTRE
 -AUTO SAVE OK / CP
-
+```
  • 100k PERBULAN 
  • 300k PERMANEN
 
@@ -41,7 +42,7 @@ python ig.py
 ```
 
 ### Jadi gimana?
-Buat yg mau beli gausah banyak nanya lah males gua ladenin nya, apalagi yg ngeluh gk dapet2 wahaha itu bukan salah script tpi emng pengguna ny aja kurang ibadah wkwk.
+Buat yg mau beli gausah banyak nanya lah males gua ladenin nya, 
 - Wa gua:
 - - +6285754017535
 - Tele gw:
