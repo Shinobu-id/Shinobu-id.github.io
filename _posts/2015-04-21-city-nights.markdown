@@ -1,19 +1,33 @@
 ---
 title:  "Auto Create Instagram Account."
-subtitle: "Auto Crate Instagram Account"
+subtitle: "Unlimited Account IG"
 author: "Hudaxcode"
 avatar: "img/authors/wferr.png"
-image: "img/b.jpg"
+image: "img/Screenshot_2021-09-15-09-24-47-84.jpg"
 date:   2021-09-15 12:12:12
 ---
 
-### K
-Tools 
-### Aliquam suscipit.
-Cras eget nisl accumsan, porta nisl in, egestas sapien. Vestibulum gravida nulla sed facilisis tempor. Suspendisse maximus nisi sit amet velit sodales fringilla. Vivamus luctus risus eget dui consectetur porttitor. Maecenas ut ultrices orci. Maecenas mollis est eu sodales mollis. Nulla facilisi. Suspendisse eros arcu, elementum sed sem eu, pharetra rhoncus odio. Proin nec tincidunt velit. Cras nisl augue, faucibus sed mauris in, vestibulum mollis nisl. Nam id libero ultrices, consequat ex vitae, convallis nulla.
+### Screencrots
+<img src="/img/Screenshot_2021-09-15-09-24-47-84.jpg" style="width:100%;" alt="Ngerykan?" />
 
-Suspendisse lorem odio, blandit at nisl quis, hendrerit tempus tellus. Donec eget leo quis nisi vulputate consectetur. Praesent dignissim enim elit, congue luctus nisl cursus at. Sed rutrum molestie risus. Donec vulputate gravida accumsan. Vivamus tempus ullamcorper eleifend. Sed sagittis mi ut dolor tincidunt, ac rutrum nisi commodo.
+### Script Auto Crate IG nya kk
+Kelebihan nih SC bisa di run di PC maupun hp
+Jadi enak-enak lah.
 
-Fusce non elit in diam rutrum vestibulum. Donec vitae elementum erat. Praesent elementum eget justo at bibendum. Fusce interdum diam lorem, ut placerat elit pretium quis. Quisque eu urna at quam commodo sagittis. Etiam posuere convallis tincidunt. Phasellus vitae ligula neque. Vivamus a purus at dolor iaculis placerat. Curabitur convallis eu lacus congue sagittis.
+### FITUR
+-CREATE UNLIMITED ACCOUNT
+-DUMP PROXY AND CHECKING
+-AUTO FOLLOW USER BY LIST
+-AUTO CHANGE PROFIL PICUTRE
+-AUTO SAVE OK / CP
 
-Aliquam suscipit fermentum mauris a accumsan. In facilisis, mauris quis pulvinar tempus, turpis sapien sodales nibh, nec feugiat augue est quis nisi. Fusce eget odio feugiat, luctus quam et, dapibus nulla. Sed ornare lacus non libero lacinia pretium. In eu dui vitae purus euismod feugiat ac ac est. Morbi vitae pretium lorem, non eleifend felis. Nullam at massa feugiat, rutrum elit at, semper lacus. Etiam vel rutrum felis. Nullam quis auctor lorem, et tempor arcu.
+ • 100k PERBULAN 
+ • 300k PERMANEN
+### Install nya ?
+
+### Jadi gimana?
+Buat yg mau beli gausah banyak nanya lah males gua ladenin nya, apalagi yg ngeluh gk dapet2 wahaha itu bukan salah script tpi emng pengguna ny aja kurang ibadah wkwk.
+- Wa gua:
+- - +6285754017535
+- Tele gw:
+- - @Xcode21
