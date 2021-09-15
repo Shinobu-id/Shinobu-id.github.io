@@ -43,7 +43,5 @@ python ig.py
 
 ### Jadi gimana?
 Buat yg mau beli gausah banyak nanya lah males gua ladenin nya, 
-- Wa gua:
-- - +6285754017535
 - Tele gw:
 - - @Xcode21
